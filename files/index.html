@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AESTH.ESS — Creative Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --black: #050308;
+    --deep: #0e0717;
+    --surface: #170d24;
+    --border: #2c1a42;
+    --dim: #3d255c;
+    --muted: #796199;
+    --text: #dcd3e8;
+    --light: #f1ecf7;
+    --white: #fbf9fc;
+    --acid: #9d4edd;
+    --acid-dim: rgba(157, 78, 221, 0.1);
+    --acid-mid: rgba(157, 78, 221, 0.25);
+    --glow: rgba(224, 170, 255, 0.4);
+    --glitch-pink: #ff007f;
+    --glitch-blue: #00ffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.05;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.04) 2px,
+      rgba(0,0,0,0.04) 4px
+    );
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 2.5rem;
+    background: rgba(5,3,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--acid); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--acid); }
+
+  .lang-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem; letter-spacing: .15em;
+    color: var(--acid); background: none;
+    border: 1px solid var(--acid); padding: .3rem .7rem;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .lang-btn:hover { background: var(--acid); color: var(--black); }
+
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 2.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(157, 78, 221, 0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(255, 0, 127, 0.04) 0%, transparent 60%),
+      var(--black);
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--acid);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--acid);
+    vertical-align: middle;
+    margin-right: 0.8rem;
+  }
+
+  .glitch-hover {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .glitch-hover:hover {
+    animation: textGlitch 0.3s infinite;
+  }
+
+  @keyframes textGlitch {
+    0% { text-shadow: 1px 1px var(--glitch-pink), -1px -1px var(--glitch-blue); }
+    20% { text-shadow: -2px 1px var(--glitch-pink), 2px -1px var(--glitch-blue); }
+    40% { text-shadow: 1px -2px var(--glitch-pink), -1px 2px var(--glitch-blue); }
+    60% { text-shadow: -1px 2px var(--glitch-pink), 1px -2px var(--glitch-blue); }
+    100% { text-shadow: -1px -1px var(--glitch-pink), 1px 1px var(--glitch-blue); }
+  }
+
+  h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(3.5rem, 10vw, 9rem);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  h1 .accent { color: var(--acid); }
+
+  h1 .glitch {
+    position: relative;
+    display: inline-block;
+  }
+
+  h1 .glitch::before,
+  h1 .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0; width: 100%;
+  }
+
+  h1 .glitch::before {
+    animation: glitch1 4s infinite;
+    clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+    color: var(--acid);
+    opacity: 0.5;
+  }
+
+  h1 .glitch::after {
+    animation: glitch2 4s infinite;
+    clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+    color: var(--glitch-pink);
+    opacity: 0.4;
+  }
+
+  @keyframes glitch1 {
+    0%, 92%, 100% { transform: translate(0); opacity: 0; }
+    93% { transform: translate(-3px, 1px); opacity: 0.5; }
+    95% { transform: translate(3px, -1px); opacity: 0.5; }
+    97% { transform: translate(0); opacity: 0; }
+  }
+
+  @keyframes glitch2 {
+    0%, 94%, 100% { transform: translate(0); opacity: 0; }
+    95% { transform: translate(3px, 2px); opacity: 0.4; }
+    97% { transform: translate(-3px, -2px); opacity: 0.4; }
+    99% { transform: translate(0); opacity: 0; }
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 480px;
+    position: relative;
+    margin-bottom: 3rem;
+    line-height: 1.7;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--acid);
+    padding: 0.9rem 2rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .hero-cta:hover {
+    background: var(--white);
+    color: var(--black);
+    box-shadow: 0 0 30px var(--glow);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem; right: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .hero-scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--acid), transparent);
+    animation: scrollLine 1.5s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.3); opacity: 0.3; }
+  }
+
+  section { padding: 7rem 2.5rem; position: relative; }
+
+  .section-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--acid);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 4rem;
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  #about {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    max-width: 1100px;
+  }
+
+  .about-text p {
+    color: var(--text);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+
+  .about-text p strong { color: var(--white); font-weight: 500; }
+
+  .about-education {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+  }
+  .about-education strong { color: var(--acid); font-weight: 700; }
+
+  .tools-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .tool-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .tool-item:hover { border-color: var(--acid); background: var(--acid-dim); }
+
+  .tool-name { font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.08em; color: var(--light); }
+
+  .tool-level { display: flex; gap: 4px; }
+
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--dim); }
+  .dot.on { background: var(--acid); box-shadow: 0 0 4px var(--acid); }
+
+  #work { background: var(--black); }
+
+  .work-filter { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
+
+  .filter-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover, .filter-btn.active { color: var(--white); background: var(--acid); border-color: var(--acid); }
+
+  .work-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1px; background: var(--border); }
+
+  .work-card { background: var(--deep); position: relative; overflow: hidden; cursor: pointer; transition: transform 0.3s; }
+  .work-card:hover { transform: scale(1.01); z-index: 2; }
+
+  .card-visual { aspect-ratio: 4/3; background: var(--surface); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+
+  .card-visual.vj-live {
+    background: radial-gradient(ellipse at 30% 50%, rgba(138, 43, 226, 0.4), transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(0, 255, 255, 0.25), transparent 60%),
+                var(--surface);
+  }
+  .card-visual.motion { background: radial-gradient(ellipse at 50% 50%, rgba(255, 0, 127, 0.25), transparent 70%), var(--surface); }
+  .card-visual.graphic { background: radial-gradient(ellipse at 80% 20%, rgba(157, 78, 221, 0.35), transparent 50%), var(--surface); }
+  .card-visual.mapping { background: radial-gradient(ellipse at 50% 30%, rgba(0, 255, 255, 0.3), transparent 60%), var(--surface); }
+
+  .card-placeholder-icon { font-size: 2rem; opacity: 0.15; }
+
+  .card-overlay { position: absolute; inset: 0; background: rgba(14, 7, 23, 0.85); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+  .work-card:hover .card-overlay { opacity: 1; }
+
+  .overlay-label {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--white); border: 1px solid var(--acid); padding: 0.5rem 1.2rem; background: rgba(157, 78, 221, 0.2);
+  }
+
+  .card-body { padding: 0.9rem 1rem 1.1rem; }
+  .card-cat { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--acid); margin-bottom: 0.5rem; }
+  .card-title { font-size: 1rem; font-weight: 500; color: var(--white); margin-bottom: 0.4rem; line-height: 1.3; }
+  .card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .tag { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; color: var(--muted); border: 1px solid var(--dim); padding: 0.2rem 0.6rem; }
+
+  #live { background: var(--deep); border-top: 1px solid var(--border); }
+  .live-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 900px; }
+  .live-card { border: 1px solid var(--border); padding: 2rem; background: var(--surface); position: relative; overflow: hidden; transition: border-color 0.3s; }
+  .live-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--acid); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .live-card:hover { border-color: var(--acid); }
+  .live-card:hover::before { transform: scaleX(1); }
+  .live-venue { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--acid); margin-bottom: 0.6rem; }
+  .live-event { font-size: 1.1rem; font-weight: 500; color: var(--white); margin-bottom: 0.4rem; }
+  .live-detail { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+  #contact { background: var(--black); border-top: 1px solid var(--border); text-align: center; padding: 8rem 2.5rem; }
+  .contact-big { font-family: 'Space Mono', monospace; font-size: clamp(2rem, 6vw, 5.5rem); font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+  .contact-big span { color: var(--acid); }
+  .contact-sub { color: var(--muted); max-width: 420px; margin: 0 auto 3rem; font-size: 0.95rem; line-height: 1.7; }
+  .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+  .contact-link { font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); border: 1px solid var(--acid); padding: 0.9rem 2rem; transition: all 0.2s; background: rgba(157, 78, 221, 0.1); }
+  .contact-link:hover { background: var(--acid); color: var(--white); box-shadow: 0 0 25px var(--glow); }
+  .contact-link.secondary { color: var(--muted); border-color: var(--border); background: none; }
+  .contact-link.secondary:hover { color: var(--white); background: none; border-color: var(--white); box-shadow: none; }
+
+  footer { padding: 2rem 2.5rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--deep); }
+  .footer-logo { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--muted); }
+  .footer-logo span { color: var(--acid); }
+  .footer-copy { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; color: var(--dim); }
+
+  .ticker-wrap { overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--deep); padding: 0.6rem 0; }
+  .ticker { display: flex; animation: ticker 20s linear infinite; white-space: nowrap; width: max-content; }
+  .ticker span { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); padding: 0 2.5rem; }
+  .ticker span.sep { color: var(--acid); }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .cursor { width: 8px; height: 8px; background: var(--acid); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9997; transform: translate(-50%, -50%); transition: transform 0.05s, width 0.2s, height 0.2s, opacity 0.2s; mix-blend-mode: difference; }
+  .cursor-ring { width: 32px; height: 32px; border: 1px solid rgba(157, 78, 221, 0.2); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9996; transform: translate(-50%, -50%); transition: transform 0.12s ease-out, width 0.2s, height 0.2s, opacity 0.2s; }
+
+  /* ── MODALE ED ELEMENTI INTERNI ── */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(5,3,8,0.96); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; padding: 2rem; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal { background: var(--deep); border: 1px solid var(--border); max-width: 750px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+  .modal-close { position: absolute; top: 1.2rem; right: 1.5rem; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); background: none; border: none; cursor: pointer; }
+  .modal-close:hover { color: var(--acid); }
+  
+  .modal-subnav { display: flex; gap: 0.4rem; padding: 0 2.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .subnav-btn { font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; background: var(--surface); border: 1px solid var(--border); color: var(--muted); padding: 0.4rem 1rem; cursor: pointer; transition: all 0.2s; }
+  .subnav-btn.active, .subnav-btn:hover { background: var(--acid-dim); border-color: var(--acid); color: var(--white); }
+  
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+  
+  .modal-media-box { width: 100%; background: #000; margin-bottom: 1.5rem; display: flex; flex-direction: column; }
+  .modal-media-box video { width: 100%; display: block; background: #000; }
+  
+  .balza-center-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .modal-body { padding: 2rem 2.5rem 2.5rem; }
+  .modal-cat { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--acid); margin-bottom: 0.6rem; }
+  .modal-title { font-family: 'Space Mono', monospace; font-size: 1.4rem; color: var(--white); margin-bottom: 1rem; }
+  .modal-desc { color: var(--text); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem; }
+  
+  .modal-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+  .meta-item label { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.3rem; }
+  .meta-item span { font-size: 0.85rem; color: var(--light); }
+
+  /* ── HERO IMAGE ── */
+  .hero-image-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-image-bg img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0.18;
+    filter: saturate(0.4) contrast(1.1);
+  }
+  .hero-image-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(5,3,8,0.3) 0%,
+      rgba(5,3,8,0.1) 40%,
+      rgba(5,3,8,0.85) 100%
+    );
+  }
+  /* fallback se nessuna immagine */
+  .hero-bg { z-index: 0; }
+  #hero > *:not(.hero-image-bg):not(.hero-bg) { position: relative; z-index: 1; }
+
+  /* ── CARD THUMBNAIL ── */
+  .card-visual img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, opacity 0.3s;
+    opacity: 0.85;
+  }
+  .work-card:hover .card-visual img {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+  /* se non c'è immagine, mostra il placeholder */
+  .card-visual.no-img { display: flex; align-items: center; justify-content: center; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; } h1 { font-size: clamp(2.8rem, 15vw, 5rem); }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; } .live-grid { grid-template-columns: 1fr; }
+    .work-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 0.5rem; }
+    .cursor, .cursor-ring { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" id="modalCloseBtn" onclick="closeModal()" data-it="[ CHIUDI ]" data-en="[ CLOSE ]">[ CHIUDI ]</button>
+    
+    <div class="modal-subnav" id="modalSubnav"></div>
+    
+    <div id="modalTabContainer"></div>
+    
+    <div class="modal-body">
+      <div class="modal-cat" id="modalCat"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-meta" id="modalMeta"></div>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#" class="nav-logo glitch-hover">AESTH<span>.</span>ESS</a>
+  <ul class="nav-links">
+    <li><a href="#work" class="glitch-hover" data-it="Lavori" data-en="Work">Lavori</a></li>
+    <li><a href="#live" class="glitch-hover" data-it="Live" data-en="Live">Live</a></li>
+    <li><a href="#about" class="glitch-hover" data-it="Chi sono" data-en="About">Chi sono</a></li>
+    <li><a href="#contact" class="glitch-hover" data-it="Contatti" data-en="Contact">Contatti</a></li>
+    <li><button class="lang-btn" id="langToggle" onclick="toggleLang()">EN</button></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-image-bg">
+    <img src="hero-photo.jpg" alt="aesth.ess live visual performance" onerror="this.parentElement.style.display='none'">
+  </div>
+  <div class="hero-bg"></div>
+  <div class="hero-tag" data-it="graphic designer, visual artist e vj" data-en="graphic designer, visual artist and vj">graphic designer, visual artist e vj</div>
+  <h1>
+    <span class="glitch" data-text="AESTH">AESTH</span><span class="accent">.</span><br>
+    <span class="glitch" data-text="ESS">ESS</span>
+  </h1>
+  <p class="hero-sub" data-it="Visuals per la notte. Grafica per l'underground.<br>Dalla locandina al muro — lo stesso linguaggio." data-en="Visuals for the night. Graphics for the underground.<br>From the poster to the wall — the same language.">
+    Visuals per la notte. Grafica per l'underground.<br>
+    Dalla locandina al muro — lo stesso linguaggio.
+  </p>
+  <a href="#work" class="hero-cta" data-it="Esplora il lavoro →" data-en="Explore the work →">Esplora il lavoro →</a>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    scroll
+  </div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>VJ Set Live</span><span class="sep">✦</span>
+    <span>Projection Mapping</span><span class="sep">✦</span>
+    <span>Motion Design</span><span class="sep">✦</span>
+    <span>Event Graphics</span><span class="sep">✦</span>
+    <span>Seamless Loops</span><span class="sep">✦</span>
+    <span>After Effects</span><span class="sep">✦</span>
+    <span>TouchDesigner</span><span class="sep">✦</span>
+    <span>Electronic Music</span><span class="sep">✦</span>
+    <span>MIDI Control</span><span class="sep">✦</span>
+    <span>Resolume Arena</span><span class="sep">✦</span>
+    <span>VJ Set Live</span><span class="sep">✦</span>
+    <span>Projection Mapping</span><span class="sep">✦</span>
+    <span>Motion Design</span><span class="sep">✦</span>
+    <span>Event Graphics</span><span class="sep">✦</span>
+    <span>Seamless Loops</span><span class="sep">✦</span>
+    <span>After Effects</span><span class="sep">✦</span>
+    <span>TouchDesigner</span><span class="sep">✦</span>
+    <span>Electronic Music</span><span class="sep">✦</span>
+    <span>MIDI Control</span><span class="sep">✦</span>
+    <span>Resolume Arena</span><span class="sep">✦</span>
+  </div>
+</div>
+
+<section id="work">
+  <div class="section-eyebrow fade-in" data-it="— Progetti" data-en="— Projects">— Progetti</div>
+  <h2 class="section-title fade-in glitch-hover" data-it="Il lavoro" data-en="The work">Il lavoro</h2>
+  <p class="section-desc fade-in" data-it="Grafica, motion e visual live per events di musica elettronica e realtà dell'underground." data-en="Graphics, motion and live visuals for electronic music events and underground culture.">Grafica, motion e visual live per eventi di musica elettronica e realtà dell'underground.</p>
+  
+  <div class="work-filter fade-in">
+    <button class="filter-btn active" data-filter="all" data-it="Tutto" data-en="All">Tutto</button>
+    <button class="filter-btn" data-filter="vj" data-it="VJ Live" data-en="VJ Live">VJ Live</button>
+    <button class="filter-btn" data-filter="mapping" data-it="Mapping" data-en="Mapping">Mapping</button>
+    <button class="filter-btn" data-filter="graphic" data-it="Grafica" data-en="Graphics">Grafica</button>
+    <button class="filter-btn" data-filter="motion" data-it="Motion & Loop" data-en="Motion & Loop">Motion & Loop</button>
+  </div>
+
+  <div class="work-grid" id="workGrid">
+
+    <div class="work-card fade-in" data-category="vj mapping" onclick="window.location='project-balza.html'">
+      <div class="card-visual vj-live">
+        <img src="thumb/balza.jpeg" alt="VJ Set La Balza" onerror="this.style.display='none'">
+        <span class="card-placeholder-icon">⬟</span>
+        <div class="card-overlay"><span class="overlay-label" data-it="Vedi progetto" data-en="View project">Vedi progetto</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat" data-it="VJ & Mapping" data-en="VJ & Mapping">VJ & Mapping</div>
+        <div class="card-title">Limbo  — La Balza Futurista</div>
+        <div class="card-desc" data-it="VJ live + projection mapping architetturale su muro in due stanze." data-en="Live VJ + architectural projection mapping across two rooms.">VJ live + projection mapping architetturale su muro in due stanze.</div>
+        <div class="card-tags"><span class="tag">TouchDesigner</span><span class="tag">After Effects</span><span class="tag">Mapping</span></div>
+      </div>
+    </div>
+
+    <div class="work-card fade-in" data-category="mapping" onclick="window.location='project-mapping.html'">
+      <div class="card-visual mapping">
+        <img src="thumb/mapping.jpeg" alt="Projection Mapping" onerror="this.style.display='none'">
+        <span class="card-placeholder-icon">⬡</span>
+        <div class="card-overlay"><span class="overlay-label" data-it="Vedi progetto" data-en="View project">Vedi progetto</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat" data-it="Projection Mapping" data-en="Projection Mapping">Projection Mapping</div>
+        <div class="card-title">Spatial Experiments</div>
+        <div class="card-desc" data-it="Mappature su cubo bianco e superfici architetturali. Illusioni 3D con DLP." data-en="Mapping on white box and architectural surfaces. 3D illusions via DLP.">Mappature su cubo bianco e superfici architetturali. Illusioni 3D con DLP.</div>
+        <div class="card-tags"><span class="tag">Resolume</span><span class="tag">After Effects</span><span class="tag">DLP</span></div>
+      </div>
+    </div>
+
+    <div class="work-card fade-in" data-category="vj" onclick="window.location='project-ambient.html'">
+      <div class="card-visual vj-live">
+        <img src="thumb/ambient.jpeg" alt="Ambient Ethereal Morg" onerror="this.style.display='none'">
+        <span class="card-placeholder-icon">⬢</span>
+        <div class="card-overlay"><span class="overlay-label" data-it="Vedi progetto" data-en="View project">Vedi progetto</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat" data-it="VJ Set Ambient" data-en="Ambient VJ Set">VJ Set Ambient</div>
+        <div class="card-title">Ethereal — Morg </div>
+        <div class="card-desc" data-it="Visual eterei rosa/azzurro per set ambient con DJ ØSC. Patch generativa TD + movie file out." data-en="Pink/blue ethereal visuals for ambient set. TD generative patch + movie file out.">Visual eterei rosa/azzurro per set ambient. Patch generativa TD + movie file out.</div>
+        <div class="card-tags"><span class="tag">TouchDesigner</span><span class="tag">Ambient</span><span class="tag">Movie File Out</span></div>
+      </div>
+    </div>
+
+    <div class="work-card fade-in" data-category="vj graphic" onclick="window.location='project-cdp.html'">
+      <div class="card-visual graphic">
+        <img src="thumb/cdp.jpeg" alt="Casa del Popolo" onerror="this.style.display='none'">
+        <span class="card-placeholder-icon">◈</span>
+        <div class="card-overlay"><span class="overlay-label" data-it="Vedi progetto" data-en="View project">Vedi progetto</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat" data-it="Grafica & VJ Live" data-en="Graphics & VJ Live">Grafica & VJ Live</div>
+        <div class="card-title">BDV — Casa del Popolo</div>
+        <div class="card-desc" data-it="Locandine AI+PS e sistema generativo TD con controllo MIDI live." data-en="AI+PS posters and TD generative system with live MIDI control.">Locandine AI+PS e sistema generativo TD con controllo MIDI live.</div>
+        <div class="card-tags"><span class="tag">Photoshop</span><span class="tag">TouchDesigner</span><span class="tag">MIDI</span></div>
+      </div>
+    </div>
+
+    <div class="work-card fade-in" data-category="motion" onclick="window.location='project-wood.html'">
+      <div class="card-visual graphic">
+        <img src="thumb/wood.jpeg" alt="WOO_D Teaser" onerror="this.style.display='none'">
+        <span class="card-placeholder-icon">◎</span>
+        <div class="card-overlay"><span class="overlay-label" data-it="Vedi progetto" data-en="View project">Vedi progetto</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat" data-it="Video Production" data-en="Video Production">Video Production</div>
+        <div class="card-title">WOO_D — Teaser & Edit</div>
+        <div class="card-desc" data-it="Teaser pre-evento in AE + riprese sul campo con camera personale." data-en="Pre-event teaser in AE + field footage with personal camera, edited in AE.">Teaser pre-evento in AE + riprese sul campo con camera personale.</div>
+        <div class="card-tags"><span class="tag">After Effects</span><span class="tag">Video Edit</span><span class="tag">Camera</span></div>
+      </div>
+    </div>
+
+    <div class="work-card fade-in" data-category="graphic" onclick="window.location='project-natura.html'">
+      <div class="card-visual graphic">
+        <img src="thumb/natura.jpeg" alt="Natura Podcast" onerror="this.style.display='none'">
+        <span class="card-placeholder-icon">✦</span>
+        <div class="card-overlay"><span class="overlay-label" data-it="Vedi progetto" data-en="View project">Vedi progetto</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat" data-it="Branding & Motion — Ongoing" data-en="Branding & Motion — Ongoing">Branding & Motion — Ongoing</div>
+        <div class="card-title">Natura Podcast</div>
+        <div class="card-desc" data-it="Cover statiche e animate per ogni episodio. Barlow Condensed, texture foglie, soglia e blend modes." data-en="Static and animated covers per episode. Barlow Condensed, leaf textures, threshold and blend modes.">Cover statiche e animate per ogni episodio. Barlow Condensed, texture foglie, soglia e blend modes.</div>
+        <div class="card-tags"><span class="tag">Photoshop</span><span class="tag">After Effects</span><span class="tag">Branding</span></div>
+      </div>
+    </div>
+
+    <div class="work-card fade-in" data-category="motion" onclick="window.location='project-loops.html'">
+      <div class="card-visual motion">
+        <img src="thumb/loops.jpeg" alt="Loop e Grafiche" onerror="this.style.display='none'">
+        <span class="card-placeholder-icon">◈</span>
+        <div class="card-overlay"><span class="overlay-label" data-it="Vedi progetto" data-en="View project">Vedi progetto</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat" data-it="Sperimentazione & Loop" data-en="Experimentation & Loops">Sperimentazione & Loop</div>
+        <div class="card-title">Archivio Visivo</div>
+        <div class="card-desc" data-it="Loop seamless, grafiche sperimentali. Evolution +1 in After Effects." data-en="Seamless loops, experimental graphics. Evolution +1 in After Effects.">Loop seamless, grafiche sperimentali. Evolution +1 in After Effects.</div>
+        <div class="card-tags"><span class="tag">After Effects</span><span class="tag">Seamless Loop</span><span class="tag">Photoshop</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="live">
+  <div class="section-eyebrow fade-in" data-it="— Performance" data-en="— Performances">— Performance</div>
+  <h2 class="section-title fade-in glitch-hover" data-it="Club & Eventi" data-en="Clubs & Events">Club & Eventi</h2>
+  <p class="section-desc fade-in" data-it="Selezione delle ultime date e installazioni in cui ho curato l'identità visiva o i visual live." data-en="A selection of recent dates and installations where I directed the visual identity or performed live visuals.">Selezione delle ultime date e installazioni in cui ho curato l'identità visiva o i visual live.</p>
+  
+  <div class="live-grid">
+    <div class="live-card fade-in">
+      <div class="live-venue">La Balza </div>
+      <div class="live-event">DJ ØSC — Hybrid Techno Set</div>
+      <div class="live-detail" data-it="VJ Set + Immersive Architectural Mapping " data-en="VJ Set + Immersive Architectural Mapping ">VJ Set + Immersive Architectural Mapping </div>
+    </div>
+    <div class="live-card fade-in">
+      <div class="live-venue">Casa del Popolo</div>
+      <div class="live-event">Electronic Waves Night</div>
+      <div class="live-detail" data-it="Generative System & Coordinato Grafico dell'evento" data-en="Generative System & Event Graphic Identity">Generative System & Coordinato Grafico dell'evento</div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-eyebrow fade-in" data-it="— Profilo" data-en="— Profile">— Profilo</div>
+  <h2 class="section-title fade-in glitch-hover" data-it="Chi sono" data-en="About me">Chi sono</h2>
+  <p class="section-desc fade-in" data-it="Dietro lo schermo, tra codice generativo e montaggio video underground." data-en="Behind the screen, between generative code and underground video editing.">Dietro lo schermo, tra codice generativo e montaggio video underground.</p>
+  
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <p data-it="Sono una Graphic Designer, VJ e Visual Artist indipendente. Il mio lavoro unisce la precisione digitale dei sistemi generativi alla ruvidezza della cultura underground e dei club." data-en="I am an independent Graphic Designer, VJ and Visual Artist. My work blends the digital precision of generative systems with the raw aesthetics of underground and club culture.">Sono un <strong>graphic designer, visual artist e vj</strong> indipendente. Il mio lavoro unisce la precisione digitale dei sistemi generativi alla ruvidezza della cultura underground e dei club.</p>
+      <p data-it="Sviluppo setup live audioreattivi su misura, projection mapping per superfici non convenzionali e tutta la comunicazione visiva (dai poster digitali ai loop video) per eventi di musica elettronica." data-en="I develop tailored audio-reactive live setups, projection mapping layouts for unconventional surfaces, and comprehensive visual communication assets (from digital posters to seamless video loops) for electronic music events.">Sviluppo setup live audioreattivi su misura, projection mapping per superfici non convenzionali e tutta la comunicazione visiva (dai poster digitali ai loop video) per eventi di musica elettronica.</p>
+      <div class="about-education" data-it="<strong>Formazione —</strong> Accademia di Belle Arti (2 anni) + Corso professionale Motion & Digital Design" data-en="<strong>Education —</strong> Academy of Fine Arts (2 years) + Professional Motion & Digital Design Course"><strong>Formazione —</strong> Accademia di Belle Arti (2 anni) + Corso professionale Motion & Digital Design</div>
+    </div>
+    <div class="tools-list fade-in">
+      <div class="tool-item">
+        <span class="tool-name">Photoshop / Illustrator</span>
+        <div class="tool-level"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-name">After Effects</span>
+        <div class="tool-level"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-name">Resolume Arena</span>
+        <div class="tool-level"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div>
+      </div>
+      <div class="tool-item">
+        <span class="tool-name">TouchDesigner</span>
+        <div class="tool-level"><div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-eyebrow fade-in" data-it="— Contatti" data-en="— Contact">— Contatti</div>
+  <div class="contact-big fade-in" data-it="Lavoriamo <span>Insieme.</span>" data-en="Let's Work <span>Together.</span>">Lavoriamo <span>Insieme.</span></div>
+  <p class="contact-sub fade-in" data-it="Hai un evento, un club set o un'installazione da accendere? Parliamone." data-en="Have an event, a club set, or an installation to light up? Let's talk.">Hai un evento, un club set o un'installazione da accendere? Parliamone.</p>
+  <div class="contact-links fade-in">
+    <a href="mailto:aesthess.va@gmail.com" class="contact-link" data-it="Invia una Mail" data-en="Send an Email">Invia una Mail</a>
+    <a href="https://www.instagram.com/aesth.ess/" target="_blank" class="contact-link secondary">Instagram</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">AESTH<span>.</span>ESS</div>
+  <div class="footer-copy" data-it="Portfolio 2026" data-en="Portfolio 2026">"Portfolio 2026"</div>
+</footer>
+
+<script>
+  // ── CURSORE CUSTOM ──
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  (function tick() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(tick);
+  })();
+
+  // ── ANIMAZIONE FADE IN AL DECOLLO ──
+  const faders = document.querySelectorAll('.fade-in');
+  const appearOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+  const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    });
+  }, appearOptions);
+
+  faders.forEach(fader => appearOnScroll.observe(fader));
+
+  // ── FILTRI DI PORTFOLIO IN HOME PAGE FIXATO CON .split() E .includes() ──
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const workCards = document.querySelectorAll('.work-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const filterValue = this.getAttribute('data-filter');
+
+      workCards.forEach(card => {
+        // Separiamo le parole scritte dentro data-category usando lo spazio
+        const categories = card.getAttribute('data-category').split(' ');
+        
+        // Controlliamo se viene selezionato "all" oppure se la categoria del filtro è inclusa nella lista
+        if (filterValue === 'all' || categories.includes(filterValue)) {
+          card.style.display = 'block';
+          setTimeout(() => card.style.opacity = '1', 10);
+        } else {
+          card.style.opacity = '0';
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // ── LOGICA MODALE (Se usata internamente) ──
+  function closeModal() {
+    document.querySelectorAll('.modal-media-box iframe').forEach(iframe => {
+      const src = iframe.src;
+      iframe.src = src;
+    });
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ── GESTIONE LINGUA INTERNAZIONALE (IT/EN) ──
+  let lang = localStorage.getItem('lang') || 'it';
+  
+  function applyLang() {
+    document.querySelectorAll('[data-it]').forEach(el => {
+      el.innerHTML = lang === 'it' ? el.dataset.it : el.dataset.en;
+    });
+    document.getElementById('langToggle').textContent = lang === 'it' ? 'EN' : 'IT';
+    document.documentElement.lang = lang;
+  }
+  
+  function toggleLang() { 
+    lang = lang === 'it' ? 'en' : 'it'; 
+    localStorage.setItem('lang', lang); 
+    applyLang(); 
+  }
+  
+  // Applica all'avvio della pagina
+  applyLang();
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>

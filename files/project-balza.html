@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VJ Set & Mapping @ La Balza — AESTH.ESS</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap');
+:root{--black:#050308;--deep:#0e0717;--surface:#170d24;--border:#2c1a42;--dim:#3d255c;--muted:#796199;--text:#dcd3e8;--light:#f1ecf7;--white:#fbf9fc;--acid:#9d4edd;--acid-dim:rgba(157,78,221,0.1);--glow:rgba(224,170,255,0.4);--glitch-pink:#ff007f;--glitch-blue:#00ffff}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.05}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);pointer-events:none;z-index:9998}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2.5rem;background:rgba(5,3,8,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Space Mono',monospace;font-size:1rem;font-weight:700;letter-spacing:.15em;color:var(--white);text-decoration:none}
+.nav-logo span{color:var(--acid)}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--acid)}
+.lang-btn{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.15em;color:var(--acid);background:none;border:1px solid var(--acid);padding:.3rem .7rem;cursor:pointer;transition:all .2s}
+.lang-btn:hover{background:var(--acid);color:var(--black)}
+.back-link{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;margin-bottom:2rem}
+.back-link:hover{color:var(--acid)}
+.glitch-hover{position:relative;display:inline-block;cursor:pointer}
+.glitch-hover:hover{animation:textGlitch .3s infinite}
+@keyframes textGlitch{0%{text-shadow:1px 1px var(--glitch-pink),-1px -1px var(--glitch-blue)}20%{text-shadow:-2px 1px var(--glitch-pink),2px -1px var(--glitch-blue)}60%{text-shadow:-1px 2px var(--glitch-pink),1px -2px var(--glitch-blue)}100%{text-shadow:-1px -1px var(--glitch-pink),1px 1px var(--glitch-blue)}}
+
+/* PROJECT PAGE LAYOUT */
+.project-hero{min-height:55vh;display:flex;flex-direction:column;justify-content:flex-end;padding:8rem 2.5rem 4rem;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.project-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 60% 40%,rgba(138,43,226,.15),transparent 70%),radial-gradient(ellipse 40% 50% at 20% 80%,rgba(255,0,127,.06),transparent 60%),var(--black)}
+.project-hero>*:not(.project-hero-bg){position:relative;z-index:1}
+.project-eyebrow{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--acid);margin-bottom:1rem}
+.project-eyebrow::before{content:'';display:inline-block;width:1.5rem;height:1px;background:var(--acid);vertical-align:middle;margin-right:.6rem}
+.project-title{font-family:'Space Mono',monospace;font-size:clamp(2rem,6vw,5rem);font-weight:700;color:var(--white);line-height:1;letter-spacing:-.02em;margin-bottom:1.5rem}
+.project-title span{color:var(--acid)}
+.project-meta-row{display:flex;gap:3rem;flex-wrap:wrap;padding-top:1.5rem;border-top:1px solid var(--border);margin-top:1.5rem}
+.meta-pill{display:flex;flex-direction:column;gap:.3rem}
+.meta-pill label{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.meta-pill span{font-size:.85rem;color:var(--light)}
+
+.project-body{max-width:900px;margin:0 auto;padding:5rem 2.5rem}
+.project-section{margin-bottom:5rem}
+.section-label{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--acid);margin-bottom:1.5rem;display:flex;align-items:center;gap:.8rem}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.project-desc{font-size:1.05rem;line-height:1.9;color:var(--text);margin-bottom:2rem}
+.project-desc strong{color:var(--white);font-weight:500}
+
+/* MEDIA TABS */
+.tab-nav{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:2rem}
+.tab-btn{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:.5rem 1.2rem;cursor:pointer;transition:all .2s}
+.tab-btn.active,.tab-btn:hover{background:var(--acid-dim);border-color:var(--acid);color:var(--white)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+.media-wrap{width:100%;background:var(--deep);border:1px solid var(--border);padding:1.5rem}
+.media-wrap video{width:100%;display:block;border-radius:4px}
+.media-wrap img{width:100%;height:auto;display:block;border-radius:4px}
+.media-row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.media-row>div{flex:1;min-width:240px;max-width:340px}
+.video-portrait{position:relative;aspect-ratio:9/16;width:100%;max-width:320px;margin:0 auto;z-index:10}
+.video-portrait iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px}
+.video-landscape{position:relative;aspect-ratio:16/9;width:100%;z-index:10}
+.video-landscape iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:4px}
+
+/* TAGS */
+.tag-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+.tag{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--muted);border:1px solid var(--dim);padding:.25rem .7rem}
+
+/* NAV PROJECTS */
+.project-nav{display:flex;justify-content:space-between;align-items:center;padding:2.5rem 2.5rem;border-top:1px solid var(--border);background:var(--deep)}
+.proj-nav-link{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.proj-nav-link:hover{color:var(--acid)}
+
+footer{padding:2rem 2.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--deep)}
+.footer-logo{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.15em;color:var(--muted)}
+.footer-logo span{color:var(--acid)}
+.footer-copy{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--dim)}
+.cursor{width:8px;height:8px;background:var(--acid);border-radius:50%;position:fixed;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);mix-blend-mode:difference}
+.cursor-ring{width:32px;height:32px;border:1px solid rgba(157,78,221,.3);border-radius:50%;position:fixed;pointer-events:none;z-index:9996;transform:translate(-50%,-50%)}
+@media(max-width:768px){nav{padding:1rem 1.5rem}.nav-links{gap:1rem}.project-hero{padding:7rem 1.5rem 3rem}.project-body{padding:3rem 1.5rem}.project-meta-row{gap:1.5rem}.cursor,.cursor-ring{display:none}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo glitch-hover">AESTH<span>.</span>ESS</a>
+  <ul class="nav-links">
+    <li><a href="index.html#work" data-it="Lavori" data-en="Work">Lavori</a></li>
+    <li><a href="index.html#about" data-it="Chi sono" data-en="About">Chi sono</a></li>
+    <li><a href="index.html#contact" data-it="Contatti" data-en="Contact">Contatti</a></li>
+    <li><button class="lang-btn" id="langToggle" onclick="toggleLang()">EN</button></li>
+  </ul>
+</nav>
+
+<div class="project-hero">
+  <div class="project-hero-bg"></div>
+  <div class="project-eyebrow" data-it="VJ Live & Projection Mapping" data-en="VJ Live & Projection Mapping">VJ Live & Projection Mapping</div>
+  <h1 class="project-title glitch-hover">VJ Set & Mapping<br><span>@ La Balza</span></h1>
+  <div class="project-meta-row">
+    <div class="meta-pill"><label data-it="Con" data-en="With">Con</label><span>DJ ØSC</span></div>
+    <div class="meta-pill"><label data-it="Luogo" data-en="Venue">Luogo</label><span>La Balza Futurista</span></div>
+    <div class="meta-pill"><label data-it="Anno" data-en="Year">Anno</label><span>2026</span></div>
+    <div class="meta-pill"><label data-it="Ruolo" data-en="Role">Ruolo</label><span data-it="VJ + Mapping" data-en="VJ + Mapping">VJ + Mapping</span></div>
+  </div>
+</div>
+
+<div class="project-body">
+  <a href="index.html#work" class="back-link">← <span data-it="Torna ai progetti" data-en="Back to projects">Torna ai progetti</span></a>
+
+  <div class="project-section">
+    <div class="section-label" data-it="Il progetto" data-en="The project">Il progetto</div>
+    <p class="project-desc" data-it="Serata techno con DJ ØSC alla Balza Futurista, gestita su due fronti visivi simultanei in due stanze diverse. Un doppio sistema pensato per avvolgere l'intera serata in un linguaggio visivo coerente, con tecniche e approcci diversi per ogni spazio." data-en="A techno night with DJ ØSC at La Balza Futurista, managed across two simultaneous visual fronts in separate rooms. A dual system designed to wrap the entire evening in a coherent visual language, using different techniques for each space.">Serata techno con DJ ØSC alla Balza Futurista, gestita su due fronti visivi simultanei in due stanze diverse. Un doppio sistema pensato per avvolgere l'intera serata in un linguaggio visivo coerente, con tecniche e approcci diversi per ogni spazio.</p>
+
+    <p class="project-desc" data-it="<strong>Prima stanza — Projection Mapping:</strong> Ho fotografato il muro reale con buchi e tele integrati nell'architettura. La foto è diventata la maschera di riferimento in After Effects: ho costruito tutte le animazioni direttamente sulle geometrie fisiche del muro, con elementi che entrano ed escono dai buchi, motion design che segue le tele existent. Il video finale, pre-renderizzato, è stato mandato in loop tramite USB su un proiettore DLP." data-en="<strong>Room One — Projection Mapping:</strong> I photographed the actual wall with its built-in holes and canvases. That photo became the reference mask in After Effects: I built all animations directly on the physical geometry of the wall, with elements entering and exiting through the holes, motion design following the existing canvases. The final pre-rendered video was looped via USB through a DLP projector.">Prima stanza — Projection Mapping: Ho fotografato il muro reale con buchi e tele integrati nell'architettura. La foto è diventata la maschera di riferimento in After Effects: ho costruito tutte le animazioni direttamente sulle geometrie fisiche del muro, con elementi che entrano ed escono dai buchi, motion design che segue le tele esistenti. Il video finale, pre-renderizzato, è stato mandato in loop tramite USB su un proiettore DLP.</p>
+
+    <p class="project-desc" data-it="<strong>Seconda stanza — VJ Set live:</strong> VJ in tempo reale tramite un'interfaccia TouchDesigner configurata per il controllo video live. Il materiale visivo usato nel set è un mix di visual originali — alcuni clip generativi registrati direttamente in TouchDesigner via movie file out, altri prodotti in After Effects — integrati con contributi video selezionati da fonti esterne." data-en="<strong>Room Two — Live VJ Set:</strong> Real-time VJ performance through a TouchDesigner interface configured for live video control. The visual material used in the set was a mix of original content — some generative clips recorded directly in TouchDesigner via movie file out, others produced in After Effects — integrated with video contributions selected from external sources.">Seconda stanza — VJ Set live: VJ in tempo reale tramite un'interfaccia TouchDesigner configurata per il controllo video live. Il materiale visivo usato nel set è un mix di visual originali — alcuni clip generativi registrati direttamente in TouchDesigner via movie file out, altri prodotti in After Effects — integrati con contributi video selezionati da fonti esterne.</p>
+
+    <div class="tag-list">
+      <span class="tag">After Effects</span><span class="tag">TouchDesigner</span><span class="tag">Projection Mapping</span><span class="tag">DLP Projector</span><span class="tag">Movie File Out</span><span class="tag">Live VJ</span>
+    </div>
+  </div>
+
+  <div class="project-section">
+    <div class="section-label" data-it="Lavori" data-en="Works">Lavori</div>
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab(0)" data-it="Visual" data-en="Visuals">Visual</button>
+      <button class="tab-btn" onclick="switchTab(1)" data-it="Mapping" data-en="Mapping">Mapping</button>
+    </div>
+    
+    <div class="tab-pane active" id="tab0">
+      <div class="media-wrap">
+        <div class="video-portrait">
+          <iframe src="https://www.youtube.com/embed/bWZ-ioVKj9k" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="tab1">
+      <div class="media-wrap">
+        <div class="video-portrait">
+          <iframe src="https://www.youtube.com/embed/Tk5mZeQKqu0" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="project-nav">
+  <a href="project-ambient.html" class="proj-nav-link" data-it="← Progetto precedente" data-en="← Previous project">← Progetto precedente</a>
+  <a href="project-mapping.html" class="proj-nav-link" data-it="Prossimo progetto →" data-en="Next project →">Prossimo progetto →</a>
+</div>
+
+<footer>
+  <div class="footer-logo">AESTH<span>.</span>ESS</div>
+  <div class="footer-copy">Portfolio 2026</div>
+</footer>
+
+<script>
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+(function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim)})();
+
+function switchTab(i){
+  document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',i===j));
+  document.querySelectorAll('.tab-pane').forEach((p,j)=>{
+    if(j!==i){
+      p.querySelectorAll('iframe').forEach(f=>{const s=f.src;f.src='';f.src=s});
+    }
+    p.classList.toggle('active',i===j);
+  });
+}
+
+let lang=localStorage.getItem('lang')||'it';
+function applyLang(){
+  document.querySelectorAll('[data-it]').forEach(el=>{el.innerHTML=lang==='it'?el.dataset.it:el.dataset.en});
+  document.getElementById('langToggle').textContent=lang==='it'?'EN':'IT';
+  document.documentElement.lang=lang;
+}
+function toggleLang(){lang=lang==='it'?'en':'it';localStorage.setItem('lang',lang);applyLang()}
+applyLang();
+</script>
+</body>
+</html>
