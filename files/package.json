@@ -1,0 +1,14 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "AESTH.ESS Creative Portfolio",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static HTML build complete'",
+    "lint": "echo 'No linting configured for static HTML'"
+  },
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.12"
+  }
+}
