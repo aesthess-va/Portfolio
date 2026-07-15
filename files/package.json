@@ -1,0 +1,21 @@
+{
+  "name": "aesthess-portfolio",
+  "version": "1.0.0",
+  "description": "Creative Portfolio with Vercel Speed Insights",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build step required'",
+    "preview": "npx serve ."
+  },
+  "keywords": [
+    "portfolio",
+    "speed-insights",
+    "vercel"
+  ],
+  "author": "AESTH.ESS",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}
